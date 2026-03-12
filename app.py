@@ -77,8 +77,7 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** 
-    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -143,7 +142,7 @@ if st.session_state.paso == "consentimiento":
     acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
     
     if st.button("Continuar"):
-        datos_completos = (iniciales and edad and sexo != "- Selecciona -" and estado_civil != "- Selecciona -" and institucion != "- Selecciona una opción -" and detalle_prepa != "- Selecciona tu plantel -")
+        datos_completos = (iniciales and edad and sexo != "- Selecciona -" and estado_civil != "- Selecciona -" and institucion != "- Selecciona una opción -" and (detalle_prepa != "- Selecciona tu plantel -" or semestre != ""))
         
         if (acepto and datos_completos) or modo_prueba:
             st.session_state.iniciales = iniciales if iniciales else "PRUEBA"
@@ -167,7 +166,6 @@ elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
     st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
     
-    # Agregamos este aviso llamativo para el celular
     st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor gíralo a **posición horizontal** para que puedas escribir y ordenar las palabras con mayor facilidad.")
 
     st.write("""
@@ -241,9 +239,7 @@ elif st.session_state.paso == "grupo_focal":
 elif st.session_state.paso == "final" or st.session_state.finalizado:
     st.balloons()
     st.success("¡Muchas gracias! Has completado el estudio.")
-    
     st.write("Damos gracias porque estás contribuyendo enormemente a nuestra tesis.")
-    
     st.info("""
     **Contacto para dudas o aclaraciones:**
     Para cualquier duda, aclaración o mayor información del estudio, puedes contactar con las investigadoras a los siguientes correos:
@@ -251,11 +247,12 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
     * **Ana Karen Gómez Arriaga:** agomeza586@alumno.uaemex.mx
     """)
 
-# --- PANTALLAS DE REDES SEMÁNTICAS ---
+# --- PANTALLAS DE REDES SEMÁNTICAS (Lógica principal de las frases) ---
 else:
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
     
+    # PASO 1: Escribir las palabras
     if st.session_state.paso == 1:
         st.write("### Escribe las primeras diez palabras que se te vengan a la mente después de leer la siguiente frase")
         st.markdown(f"<h2 style='text-align: center; color: #4A90E2;'>{frase_actual}</h2>", unsafe_allow_html=True)
@@ -269,8 +266,9 @@ else:
             else:
                 st.error("Por favor escribe 10 palabras diferentes.")
 
-elif st.session_state.paso == 2:
-        # Mostramos la frase estímulo aquí también
+    # PASO 2: Ordenar las palabras (Aquí es donde estaba el error)
+    elif st.session_state.paso == 2:
+        # Mostramos la frase estímulo aquí también como pediste
         st.markdown(f"<h3 style='text-align: center; color: #4A90E2;'>Ordenando palabras para: \"{frase_actual}\"</h3>", unsafe_allow_html=True)
         
         st.write("Selecciona tus palabras en orden:")
@@ -303,7 +301,10 @@ elif st.session_state.paso == 2:
                         "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4],
                         "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9]
                     }
-                    requests.post(SCRIPT_URL, json=payload)
+                    try:
+                        requests.post(SCRIPT_URL, json=payload)
+                    except:
+                        st.error("Error al conectar con la base de datos.")
                 
                 if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
                     st.session_state.indice_palabra += 1
@@ -312,10 +313,4 @@ elif st.session_state.paso == 2:
                     st.session_state.paso = "grupo_focal"
                 st.rerun()
             else:
-
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
-
-
-
-
-
