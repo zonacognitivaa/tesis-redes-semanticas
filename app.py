@@ -245,7 +245,8 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
     Para cualquier duda, aclaración o mayor información del estudio, puedes contactar con las investigadoras a los siguientes correos:
     * **Karen Guadalupe Aguirre Rojas:** kaguirrer848@alumno.uaemex.mx
     * **Ana Karen Gómez Arriaga:** agomeza586@alumno.uaemex.mx
-    Si deseas posteriormente conocer los resultados, escribenos para compartirte la tesis una vez este finalizada.
+    
+    Si deseas posteriormente **conocer los resultados**, escribenos para compartirte la tesis una vez este finalizada.
     """)
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
@@ -296,6 +297,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
