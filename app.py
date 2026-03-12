@@ -129,8 +129,11 @@ if st.session_state.paso == "consentimiento":
             detalle_prepa = st.text_input("Nombre de tu preparatoria:")
 
         if "Preparatoria" in institucion:
-            st.warning("⚠️ Requiere consentimiento de padres.")
-            archivo_padres = st.file_uploader("Sube el documento firmado", type=["pdf", "jpg", "png"])
+            st.warning("⚠️ Al ser estudiante de preparatoria, es obligatorio el consentimiento de tus padres.")
+            url_drive = "https://drive.google.com/file/d/1gg09wf1bHp2hbMZza4J_GqfEmIqvJ0fK/view?usp=sharing" 
+            st.link_button("📥 Descargar Consentimiento para Padres", url_drive)
+            
+            archivo_padres = st.file_uploader("Sube el documento firmado (Foto o PDF)", type=["pdf", "jpg", "jpeg", "png"])
 
     acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
     
@@ -297,6 +300,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
