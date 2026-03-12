@@ -87,8 +87,8 @@ if st.session_state.paso == "consentimiento":
     
     st.write("---")
     st.write("### Firma de Consentimiento")
-    st.write("Yo, acepto de manera voluntaria que se me incluya como sujeto de estudio...")
-    
+    st.write("Yo, acepto de manera voluntaria que se me incluya como sujeto de estudio en este proyecto de investigación, luego de haber conocido y comprendido la finalidad sobre dicho proyecto, y de estar seguro(a) de que mis datos serán utilizados de manera anónima y segura.")
+
     col1, col2 = st.columns(2)
     opciones_relig = ["- Selecciona -", "Católica", "Cristiana", "Evangélica", "Testigos de Jehová", "Pentecostal", "Ateísta", "Otra"]
 
@@ -300,6 +300,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
