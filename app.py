@@ -58,7 +58,7 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Si te es imposible, utiliza la rotación automatica para alternar entre vertical y horizontal.**")
+    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Si te es imposible, pon la pagina en modo sitio para computadora.**")
 
     st.info("""
     
@@ -169,13 +169,14 @@ elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
     st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
     
-    st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor utiliza rotación automatica para alternar entre visión vertical y horizontal.")
+    st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor utiliza el modo "sitio para computadora"")
 
     st.write("""
     Gracias por participar. Las instrucciones son:
     1. Lee la frase que aparecerá en pantalla.
     2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
     3. Ordénalas por importancia (la #1 es la más importante para ti).
+    4. Si estas en celular, activa modo "sitio para computadora", en tu pantalla localiza y pulsa los tres puntos verticales, te aparecera un menú activa el modo "sitio para computadora" y continua con la prueba 
     """)
     if st.button("Comenzar Estudio"):
         st.session_state.paso = 1
@@ -302,6 +303,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
