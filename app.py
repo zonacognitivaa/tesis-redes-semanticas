@@ -4,7 +4,7 @@ import requests
 import base64
 
 # --- 1. CONFIGURACIÓN ---
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4COJaFUYkPtVKGp_cVu4TbOJhNZKX2n4Qw1VqBsZJVd31tzcyhK3a4ZjkloxPJLmh/exec"
+SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyclCu2yhaLeb-uJkhzbXKEnXyB2Kx8f-je3GCmmL65woi1_ejKgriNVKUbkPhZTgrP/exec"
 
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres son mejor para:", 
@@ -200,4 +200,5 @@ else:
                     st.session_state.indice_palabra += 1; st.session_state.paso = 1
                 else: st.session_state.paso = "grupo_focal"
                 st.rerun()
+
 
