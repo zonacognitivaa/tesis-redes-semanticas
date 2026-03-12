@@ -98,8 +98,9 @@ if st.session_state.paso == "consentimiento":
     with col1:
         iniciales = st.text_input("Mis iniciales (Ej: A.M.A.G)").upper()
         edad = st.number_input("Edad", min_value=15, max_value=40, step=1, value=18)
-        sexo = st.selectbox("Sexo", ["- Selecciona -", "Mujer", "Hombre"])
-        estado_civil = st.selectbox("Estado Civil", ["- Selecciona -", "Soltero/a", "Casado/a", "Vivo con mi pareja en unión libre"])
+        sexo = st.selectbox("Sexo", ["- Selecciona -", "Mujer", "Hombre", "Prefiero no decirlo"])
+        estado_civil = st.selectbox("Estado Civil", ["- Selecciona -", "Soltero/a", "Casado/a", "Vivo con mi pareja en unión libre", "Viudo/a"])
+        religión = st. selectbox("religión", ["-Selecciona-", "Catolica", "Cristtiana", "Evangelica" "Testigos de Jehova", "Pentecostal", "Ateista" "Otra"])
         correo = st.text_input("Correo electrónico (Opcional)")
         
     with col2:
@@ -328,6 +329,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
