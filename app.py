@@ -271,7 +271,7 @@ else:
         # Mostramos la frase estímulo aquí también como pediste
         st.markdown(f"<h3 style='text-align: center; color: #4A90E2;'>\"{frase_actual}\"</h3>", unsafe_allow_html=True)
         
-        st.write("Selecciona tus palabras en orden de importancia de acuerdo con lo que tu opines:")
+        st.write("Selecciona tus palabras en orden de importancia de acuerdo con lo que tú opines:")
         st.info("💡 La #1 es la de mayor relación y la #10 la de menor relación.")
         
         col_izq, col_der = st.columns(2)
@@ -314,4 +314,5 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
