@@ -286,8 +286,13 @@ else:
         with col_der:
             if ranking:
                 st.markdown("### 📌 Tu orden actual:")
+                # Creamos una sola cadena de texto para reducir el espacio entre líneas
+                lista_compacta = ""
                 for i, palabra in enumerate(ranking):
-                    st.write(f"**{i+1}.** {palabra}")
+                    # El doble espacio al final de la línea es el truco para el interlineado pegadito
+                    lista_compacta += f"<span style='color:#4A90E2'>**{i+1}.**</span> {palabra}  \n"
+
+                st.markdown(lista_compacta)
         
         st.write("---") 
         
@@ -316,6 +321,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
