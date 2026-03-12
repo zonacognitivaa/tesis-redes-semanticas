@@ -4,7 +4,7 @@ import requests
 import base64
 
 # --- 1. CONFIGURACIÓN ---
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4hilfxE0rzNi_a9Pc1hF0bq9TONdNH2JPbWZst2r5OcbrwjZ3jugmQS91DFZJJxKv/exec"
+SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4RZrbbzt8eBQoC9jlcCfsN4YfDv2YUzHIs5d7FclNcHijg7tM_3PbB_QV4C5wEOrw/exec"
 
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres son mejores para:", 
@@ -301,6 +301,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
