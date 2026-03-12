@@ -35,11 +35,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- MODO PRUEBA PARA REVISAR DISEÑO ---
-st.sidebar.markdown("### 🛠️ Herramientas de Desarrollo")
-modo_prueba = st.sidebar.checkbox("Activar MODO PRUEBA (Permite avanzar sin contestar nada)", value=False)
-if modo_prueba:
-    st.sidebar.warning("El Modo Prueba está ACTIVADO. Los candados están apagados y no se enviarán datos al servidor.")
+modo_prueba = False
 
 # --- 2. LÓGICA DE GRUPOS Y ESTADOS ---
 if 'indice_palabra' not in st.session_state:
@@ -240,12 +236,14 @@ elif st.session_state.paso == "grupo_focal":
 elif st.session_state.paso == "final" or st.session_state.finalizado:
     st.balloons()
     st.success("¡Muchas gracias! Has completado el estudio.")
-    st.write("Damos gracias porque estás contribuyendo enormemente a nuestra tesis.")
+    st.write("Damos gracias por contribuir a nuestra tesis.")
     st.info("""
     **Contacto para dudas o aclaraciones:**
     Para cualquier duda, aclaración o mayor información del estudio, puedes contactar con las investigadoras a los siguientes correos:
     * **Karen Guadalupe Aguirre Rojas:** kaguirrer848@alumno.uaemex.mx
     * **Ana Karen Gómez Arriaga:** agomeza586@alumno.uaemex.mx
+
+    Para obtener información de donde y cuando se publicará la tesis, puedes contactar a las investigadoras.
     """)
 
 # --- PANTALLAS DE REDES SEMÁNTICAS (Lógica principal de las frases) ---
@@ -330,6 +328,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
