@@ -5,7 +5,7 @@ import base64
 
 # --- 1. CONFIGURACIÓN ---
 # Esta URL la obtendrás al final cuando configuremos Google Apps Script
-SCRIPT_URL = "SCRIPT_URL = "SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4COJaFUYkPtVKGp_cVu4TbOJhNZKX2n4Qw1VqBsZJVd31tzcyhK3a4ZjkloxPJLmh/exec""
+SCRIPT_URL ="https://script.google.com/macros/s/AKfycby4COJaFUYkPtVKGp_cVu4TbOJhNZKX2n4Qw1VqBsZJVd31tzcyhK3a4ZjkloxPJLmh/exec""
 
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres deben ser:", 
@@ -330,6 +330,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
