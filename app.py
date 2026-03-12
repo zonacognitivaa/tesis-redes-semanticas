@@ -292,7 +292,7 @@ else:
                     # El doble espacio al final de la línea es el truco para el interlineado pegadito
                     lista_compacta += f"<span style='color:#4A90E2'>**{i+1}.**</span> {palabra}  \n"
 
-                st.markdown(lista_compacta)
+                st.markdown(lista_compacta, unsafe_allow_html=True)
         
         st.write("---") 
         
@@ -321,6 +321,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
