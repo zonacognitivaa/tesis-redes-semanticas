@@ -57,10 +57,32 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 # --- PANTALLA 0: CONSENTIMIENTO INFORMADO ---
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora o usa el celular horizontal.**")
+    
+    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Utiliza el celular de manera horizontal.**")
+
     st.info("""
+    
     **Título de la investigación:** Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes 
-    **Investigadoras:** Karen Guadalupe Aguirre Rojas, Ana Karen Gómez Arriaga. **Asesora:** Jaqueline Mota Palma.
+    
+    **Duración estimada y procedimiento:** La aplicación de las redes semánticas será desarrollada en un tiempo estimado de 1 hora, dando tiempo suficiente al sujeto para responder de la manera más sincera posible, teniendo en cuenta que los datos obtenidos serán confidenciales y serán empleados para investigación.
+    
+    **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
+    
+    **Investigadoras:** 
+    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    * Ana Karen Gómez Arriaga (Investigadora)
+    * Jaqueline Mota Palma (Asesora de tesis)
+
+    **Objetivo de la Investigación:** Identificar cómo se da la construcción social de los roles y estereotipos de género y la normalización de la violencia en estudiantes de último grado de preparatoria y último semestre de licenciatura de una universidad pública del Estado de México. 
+    
+    **Beneficios de la Investigación:** Ampliar el conocimiento que se tiene acerca de temas de género, para así promover una visión de la vida libre de la heteronormatividad.
+    
+    **Aclaraciones:**
+    1. Su decisión de participar en el estudio es voluntaria.
+    2. En caso de decidir no participar en esta investigación, no habrá ninguna consecuencia desfavorable para usted, su familia o su institución.
+    3. Si decide participar en la investigación usted puede retirarse en el momento que así lo disponga.
+    4. La información obtenida en este estudio mantendrá estricta confidencialidad acerca de los participantes.
+    5. Los resultados de la investigación podrán difundirse en tesis, artículos científicos o presentaciones académicas, garantizando siempre el anonimato de los participantes.
     """)
     
     st.write("---")
@@ -224,3 +246,4 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
