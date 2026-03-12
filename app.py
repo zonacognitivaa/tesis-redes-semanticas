@@ -74,10 +74,10 @@ if st.session_state.paso == "consentimiento":
         
         st.write("**Creencias Religiosas:**")
         rel_crianza = st.selectbox("Religión en la que me criaron", opciones_relig)
-        rel_crianza_otra = st.text_input("Especifica crianza:", placeholder="Escribe aquí...") if rel_crianza == "Otra" else ""
+        rel_crianza_otra = st.text_input("Especifica religión de crianza:", placeholder="Escribe aquí...") if rel_crianza == "Otra" else ""
         
         rel_actual = st.selectbox("Religión actual", opciones_relig)
-        rel_actual_otra = st.text_input("Especifica actual:", placeholder="Escribe aquí...") if rel_actual == "Otra" else ""
+        rel_actual_otra = st.text_input("Especifica religión actual:", placeholder="Escribe aquí...") if rel_actual == "Otra" else ""
 
         # --- PREGUNTA DE INFLUENCIA CON LA NUEVA OPCIÓN ---
         influencia_rel = st.selectbox(
@@ -200,3 +200,4 @@ else:
                     st.session_state.indice_palabra += 1; st.session_state.paso = 1
                 else: st.session_state.paso = "grupo_focal"
                 st.rerun()
+
