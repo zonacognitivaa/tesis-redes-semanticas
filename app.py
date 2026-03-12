@@ -207,7 +207,7 @@ else:
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
     
     if st.session_state.paso == 1:
-        st.write("### Escribe las primeras diez palabras...")
+        st.write("### Escribe las primeras diez palabras que se te vengan a la mente después de leer la siguiente frase")
         st.markdown(f"<h2 style='text-align: center; color: #4A90E2;'>{frase_actual}</h2>", unsafe_allow_html=True)
         w = [st.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}") for i in range(10)]
         if st.button("Siguiente: Ordenar importancia"):
@@ -221,7 +221,7 @@ else:
                 st.error("⚠️ Escribe las 10 palabras.")
 
     elif st.session_state.paso == 2:
-        st.write("Selecciona tus palabras en orden de importancia:")
+        st.write("Selecciona tus palabras en orden de importancia de acuerdo con lo que tú opines:")
         st.markdown(f"<h3 style='text-align: center; color: #4A90E2;'>\"{frase_actual}\"</h3>", unsafe_allow_html=True)
         col_izq, col_der = st.columns(2)
         with col_izq:
@@ -246,4 +246,5 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
