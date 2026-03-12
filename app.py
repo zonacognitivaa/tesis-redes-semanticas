@@ -208,17 +208,18 @@ elif st.session_state.paso == "grupo_focal":
         if st.button("Enviar mis datos y finalizar"):
             if (whatsapp and correo_focal and modalidad and dias and horarios) or modo_prueba:
                 payload_focal = {
-                    "tipo": "focal",
-                    "nombre": st.session_state.iniciales,
-                    "whatsapp": whatsapp,
-                    "correo_focal": correo_focal,
-                    "modalidad": ", ".join(modalidad),
-                    "dias": ", ".join(dias),
-                    "horarios": ", ".join(horarios),
-                    "detalle_horarios": detalle_h,
-                    "archivo_b64": st.session_state.archivo_b64,
-                    "iniciales": st.session_state.iniciales  
-                }
+                
+                "tipo": "focal", 
+                "nombre": st.session_state.iniciales, 
+                "whatsapp": whatsapp, 
+                "correo_focal": correo_focal,
+                "modalidad": ", ".join(modalidad),
+                "dias": ", ".join(dias),
+                "horarios": ", ".join(horarios),
+                "detalle_horarios": detalle_h,
+                "archivo_b64": st.session_state.archivo_b64, 
+                "iniciales": st.session_state.iniciales
+            }
                 
                 if not modo_prueba:
                     try:
@@ -300,6 +301,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
