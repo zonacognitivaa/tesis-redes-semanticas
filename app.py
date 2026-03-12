@@ -239,7 +239,7 @@ elif st.session_state.paso == "grupo_focal":
 elif st.session_state.paso == "final" or st.session_state.finalizado:
     st.balloons()
     st.success("¡Muchas gracias! Has completado el estudio.")
-    st.write("**Agradecemos profundamente que estás contribuyendo a nuestro proyecto de tesis.")
+    st.write("**Agradecemos profundamente que estás contribuyendo a nuestro proyecto de tesis.**")
     st.info("""
     **Contacto para dudas o aclaraciones:**
     Para cualquier duda, aclaración o mayor información del estudio, puedes contactar con las investigadoras a los siguientes correos:
@@ -296,6 +296,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
