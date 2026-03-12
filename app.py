@@ -8,8 +8,8 @@ import base64
 SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4COJaFUYkPtVKGp_cVu4TbOJhNZKX2n4Qw1VqBsZJVd31tzcyhK3a4ZjkloxPJLmh/exec"
 
 PALABRAS_ESTIMULO = [
-    "Las mujeres son:", "Los hombres son:", "las mujeres deben ser:", 
-    "Los hombres deben ser:", "La mujer para la religión es:", 
+    "Las mujeres son:", "Los hombres son:", "las mujeres son mejor para:", 
+    "Los hombres son mejor para:", "La mujer para la religión es:", 
     "El hombre para la religión es:", "La violencia es:", 
     "La violencia se manifiesta en:"
 ]
@@ -330,6 +330,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
