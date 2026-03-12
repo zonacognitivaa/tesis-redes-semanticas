@@ -37,7 +37,7 @@ st.markdown("""
 
 # --- MODO PRUEBA PARA REVISAR DISEÑO ---
 st.sidebar.markdown("### 🛠️ Herramientas de Desarrollo")
-modo_prueba = st.sidebar.checkbox("Activar MODO PRUEBA (Permite avanzar sin contestar nada)", value=True)
+modo_prueba = st.sidebar.checkbox("Activar MODO PRUEBA (Permite avanzar sin contestar nada)", value=False)
 if modo_prueba:
     st.sidebar.warning("El Modo Prueba está ACTIVADO. Los candados están apagados y no se enviarán datos al servidor.")
 
@@ -101,7 +101,7 @@ if st.session_state.paso == "consentimiento":
     col1, col2 = st.columns(2)
     with col1:
         iniciales = st.text_input("Mis iniciales (Ej: A.M.A.G)").upper()
-        edad = st.text_input("Edad (Solo números, Ej: 18)")
+        edad = st.number_input("Edad", min_value=15, max_value=40, step=1, value=18)
         sexo = st.selectbox("Sexo", ["- Selecciona -", "Mujer", "Hombre"])
         estado_civil = st.selectbox("Estado Civil", ["- Selecciona -", "Soltero/a", "Casado/a", "Vivo con mi pareja en unión libre"])
         correo = st.text_input("Correo electrónico (Opcional)")
@@ -330,6 +330,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
