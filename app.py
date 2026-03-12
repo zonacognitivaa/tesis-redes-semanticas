@@ -299,17 +299,21 @@ else:
         if st.button("Guardar y continuar"):
             if len(ranking) == 10 or modo_prueba:
                 r = ranking if len(ranking) == 10 else st.session_state.temp_words
+                
+                # --- NUEVO: Capturamos el orden en que las escribieron ---
+                orig = st.session_state.temp_words
+                
                 if not modo_prueba:
                     payload = {
                         "tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad,
                         "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil,
                         "correo": st.session_state.correo, "institucion": st.session_state.institucion,
                         "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado,
-                        "frase": frase_actual,
-                        # ORDEN DE IMPORTANCIA (El que ellos eligieron después)
+                        "frase": frase_actual, 
+                        # ORDEN DE IMPORTANCIA (El que eligieron al final)
                         "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4],
                         "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9],
-                        # ORDEN DE APARICIÓN (El orden en que las escribieron al principio)
+                        # ORDEN ORIGINAL (Como las escribieron al principio)
                         "o1": orig[0], "o2": orig[1], "o3": orig[2], "o4": orig[3], "o5": orig[4],
                         "o6": orig[5], "o7": orig[6], "o8": orig[7], "o9": orig[8], "o10": orig[9]
                     }
@@ -326,6 +330,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
