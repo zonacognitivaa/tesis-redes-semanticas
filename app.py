@@ -219,6 +219,7 @@ elif st.session_state.paso == "grupo_focal":
                 "detalle_horarios": detalle_h,
                 "archivo_b64": st.session_state.archivo_b64, 
                 "iniciales": st.session_state.iniciales
+                "grupo": st.session_state.grupo_asignado
             }
                 
                 if not modo_prueba:
@@ -301,6 +302,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
