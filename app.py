@@ -139,13 +139,22 @@ if st.session_state.paso == "consentimiento":
             st.error("⚠️ Por favor completa todos los campos obligatorios.")
 
 # --- PANTALLA 1: BIENVENIDA ---
-elif st.session_state.paso == "instrucciones":
-    st.subheader("¡Bienvenido(a)!")
-    st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
-    st.write("Gracias por participar. Las instrucciones son:")
-    st.write("1. Lee la frase en azul. 2. Escribe 10 palabras diferentes. 3. Ordénalas por importancia.")
-    if st.button("Comenzar Estudio"):
-        st.session_state.paso = 1; st.rerun()
+        elif st.session_state.paso == "instrucciones":
+            st.subheader("¡Bienvenido(a)!")
+            st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
+    
+            st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor gíralo a **posición horizontal** para que puedas escribir y ordenar las palabras con mayor facilidad.")
+
+    st.write("""
+    Gracias por participar. Las instrucciones son:
+    1. Lee la frase que aparecerá en pantalla.
+    2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
+    3. Ordénalas por importancia (la #1 es la más importante para ti).
+    """)
+        if st.button("Comenzar Estudio"):
+        st.session_state.paso = 1
+        st.rerun()
+
 
 # --- PANTALLA GRUPO FOCAL ---
 elif st.session_state.paso == "grupo_focal":
@@ -203,3 +212,4 @@ else:
                 else: st.session_state.paso = "grupo_focal"
                 st.rerun()
             else: st.warning("⚠️ Selecciona las 10 palabras.")
+
