@@ -269,7 +269,10 @@ else:
             else:
                 st.error("Por favor escribe 10 palabras diferentes.")
 
-    elif st.session_state.paso == 2:
+   elif st.session_state.paso == 2:
+        # --- NUEVO: Mostramos la frase aquí también para que no se les olvide al ordenar ---
+        st.markdown(f"<h3 style='text-align: center; color: #4A90E2;'>Ordenando palabras para: \"{frase_actual}\"</h3>", unsafe_allow_html=True)
+        
         st.write("Selecciona tus palabras en orden:")
         st.info("💡 La #1 es la de mayor relación y la #10 la de menor relación.")
         
@@ -311,5 +314,6 @@ else:
             else:
 
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
