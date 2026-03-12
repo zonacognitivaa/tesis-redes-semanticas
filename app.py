@@ -58,7 +58,7 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Si te es imposible, pon la pagina en modo sitio para computadora desde ⋮ y luego 🖥️.**")
+    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Si te es imposible, pon la pagina en modo sitio para computadora; click en ⋮ y luego 🖥️.**")
 
     st.info("""
     
@@ -304,6 +304,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
