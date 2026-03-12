@@ -67,8 +67,10 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.info("""
     st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Utiliza el celular de manera horizontal.**")
+
+    st.info("""
+    
     **Título de la investigación:** Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes 
     
     **Duración estimada y procedimiento:** La aplicación de las redes semánticas será desarrollada en un tiempo estimado de 1 hora, dando tiempo suficiente al sujeto para responder de la manera más sincera posible, teniendo en cuenta que los datos obtenidos serán confidenciales y serán empleados para investigación.
@@ -309,4 +311,5 @@ else:
             else:
 
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
