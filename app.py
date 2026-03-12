@@ -178,21 +178,61 @@ elif st.session_state.paso == "instrucciones":
         st.session_state.paso = 1
         st.rerun()
 
-# --- PANTALLA GRUPO FOCAL ---
+# --- PANTALLA X: GRUPO FOCAL ---
 elif st.session_state.paso == "grupo_focal":
-    st.subheader("🗣️ Grupo Focal")
-    participa = st.radio("¿Te gustaría participar?", ["-", "Sí", "No"])
-    if participa == "Sí":
-        whatsapp = st.text_input("WhatsApp")
-        correo_focal = st.text_input("Correo")
-        if st.button("Finalizar"):
-            payload_f = {"tipo": "focal", "nombre": st.session_state.iniciales, "whatsapp": whatsapp, "correo_focal": correo_focal, "archivo_b64": st.session_state.archivo_b64, "iniciales": st.session_state.iniciales}
-            requests.post(SCRIPT_URL, json=payload_f)
+    st.subheader("🗣️ Invitación a Grupo Focal")
+    st.write("Para enriquecer aún más esta investigación, estaremos realizando un grupo focal (una charla grupal) sobre este tema.")
+    st.write("**¿Te gustaría participar?**")
+    
+    participa = st.radio("Selecciona una opción:", ["-", "Sí, me gustaría participar", "No, gracias"])
+    
+    if participa == "Sí, me gustaría participar":
+        st.info("¡Excelente! Por favor déjanos tus datos para contactarte:")
+        whatsapp = st.text_input("Número de WhatsApp")
+        correo_focal = st.text_input("Correo que revises constantemente")
+        
+        modalidad = st.multiselect("¿En qué modalidad prefieres participar?", ["En línea (Teams)", "Presencial"])
+        
+        dias = st.multiselect("¿Qué días de la semana te acomodan mejor considerando el grupo focal?", 
+                              ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"])
+        
+        horarios = st.multiselect("¿En qué horario preferirías?", 
+                                  ["Mañana (9:00 - 12:00)", "Tarde (12:00 - 16:00)", "Noche (16:00 - 20:00)"])
+        
+        detalle_h = st.text_area("Detalla tus horarios con tus propias palabras (Opcional):", 
+                                 placeholder="Ej: Solo puedo los martes después de las 5pm porque salgo de trabajar.")
+        
+        if st.button("Enviar mis datos y finalizar"):
+            if (whatsapp and correo_focal and modalidad and dias and horarios) or modo_prueba:
+                payload_focal = {
+                    "tipo": "focal",
+                    "nombre": st.session_state.iniciales,
+                    "whatsapp": whatsapp,
+                    "correo_focal": correo_focal,
+                    "modalidad": ", ".join(modalidad),
+                    "dias": ", ".join(dias),
+                    "horarios": ", ".join(horarios),
+                    "detalle_horarios": detalle_h,
+                    "archivo_b64": st.session_state.archivo_b64,
+                    "iniciales": st.session_state.iniciales  
+                }
+                
+                if not modo_prueba:
+                    try:
+                        requests.post(SCRIPT_URL, json=payload_focal)
+                    except:
+                        pass 
+                
+                st.session_state.paso = "final"
+                st.session_state.finalizado = True
+                st.rerun()
+            else:
+                st.warning("Por favor completa al menos tu WhatsApp, correo, modalidad, días y horarios preferidos.")
+                
+    elif participa == "No, gracias":
+        if st.button("Finalizar estudio"):
             st.session_state.paso = "final"
-            st.rerun()
-    elif participa == "No":
-        if st.button("Finalizar"): 
-            st.session_state.paso = "final"
+            st.session_state.finalizado = True
             st.rerun()
 
 # --- PANTALLA FINAL ---
@@ -249,6 +289,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
