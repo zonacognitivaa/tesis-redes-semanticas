@@ -112,7 +112,7 @@ if st.session_state.paso == "consentimiento":
         correo = st.text_input("Correo electrónico (Opcional)")
         
     with col2:
-        institucion = st.selectbox("Institución", ["- Selecciona una opción -", "1. Facultad de Ciencias de la Conducta (Psicología)", "2. Preparatoria UAEMex", "3. Preparatoria"])
+        institucion = st.selectbox("Institución", ["- Selecciona una opción -", "1. Facultad de Ciencias de la Conducta (Psicología)", "2. Preparatoria UAEMex"])
         
         semestre = ""
         detalle_prepa = ""
@@ -125,9 +125,7 @@ if st.session_state.paso == "consentimiento":
                 
         elif institucion == "2. Preparatoria UAEMex":
             detalle_prepa = st.selectbox("Selecciona tu plantel", ["- Selecciona tu plantel -", "Plantel 1: Lic. Adolfo López Mateos", "Plantel 2: Nezahualcóyotl", "Plantel 3: Cuauhtémoc", "Plantel 4: Ignacio Ramírez Calzada", "Plantel 5: Dr. Ángel Ma. Garibay Kintana"])
-        elif institucion == "3. Preparatoria":
-            detalle_prepa = st.text_input("Nombre de tu preparatoria:")
-
+        
         if "Preparatoria" in institucion:
             st.warning("⚠️ Al ser estudiante de preparatoria, es obligatorio el consentimiento de tus padres.")
             url_drive = "https://drive.google.com/file/d/1gg09wf1bHp2hbMZza4J_GqfEmIqvJ0fK/view?usp=sharing" 
@@ -304,6 +302,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
