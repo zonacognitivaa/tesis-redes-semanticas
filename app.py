@@ -278,7 +278,7 @@ else:
         col_izq, col_der = st.columns(2)
         
         with col_izq:
-            ranking = st.multiselect("Haz clic para elegir en orden:"La #1 es la de mayor relación y la #10 la de menor relación", st.session_state.temp_words, max_selections=10)
+            ranking = st.multiselect("Haz clic para elegir en orden:","La #1 es la de mayor relación y la #10 la de menor relación", st.session_state.temp_words, max_selections=10)
             if len(ranking) < 10:
                 st.info(f"Has seleccionado {len(ranking)} de 10 palabras.")
                 
@@ -320,6 +320,7 @@ else:
                 st.rerun()
             else:
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
+
 
 
 
