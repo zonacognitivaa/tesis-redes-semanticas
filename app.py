@@ -236,10 +236,17 @@ elif st.session_state.paso == "grupo_focal":
             st.rerun()
 
 # --- PANTALLA FINAL ---
-elif st.session_state.paso == "final":
+elif st.session_state.paso == "final" or st.session_state.finalizado:
     st.balloons()
     st.success("¡Muchas gracias! Has completado el estudio.")
-    st.write("Damos gracias por contribuir a nuestra tesis.")
+    st.write("**Agradecemos profundamente que estás contribuyendo a nuestro proyecto de tesis.")
+    st.info("""
+    **Contacto para dudas o aclaraciones:**
+    Para cualquier duda, aclaración o mayor información del estudio, puedes contactar con las investigadoras a los siguientes correos:
+    * **Karen Guadalupe Aguirre Rojas:** kaguirrer848@alumno.uaemex.mx
+    * **Ana Karen Gómez Arriaga:** agomeza586@alumno.uaemex.mx
+    Si deseas posteriormente conocer los resultados, escribenos para compartirte la tesis una vez este finalizada.
+    """)
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
@@ -289,6 +296,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
