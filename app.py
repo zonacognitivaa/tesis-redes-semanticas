@@ -163,6 +163,10 @@ if st.session_state.paso == "consentimiento":
 elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
     st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
+    
+    # Agregamos este aviso llamativo para el celular
+    st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor gíralo a **posición horizontal** para que puedas escribir y ordenar las palabras con mayor facilidad.")
+
     st.write("""
     Gracias por participar. Las instrucciones son:
     1. Lee la frase que aparecerá en pantalla.
@@ -302,4 +306,5 @@ else:
                     st.session_state.paso = "grupo_focal"
                 st.rerun()
             else:
+
                 st.warning("Debes seleccionar tus 10 palabras antes de guardar.")
