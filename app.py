@@ -4,7 +4,7 @@ import requests
 import base64
 
 # --- 1. CONFIGURACIÓN ---
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyclCu2yhaLeb-uJkhzbXKEnXyB2Kx8f-je3GCmmL65woi1_ejKgriNVKUbkPhZTgrP/exec"
+SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4COJaFUYkPtVKGp_cVu4TbOJhNZKX2n4Qw1VqBsZJVd31tzcyhK3a4ZjkloxPJLmh/exec"
 
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres son mejor para:", 
@@ -134,16 +134,17 @@ if st.session_state.paso == "consentimiento":
             st.session_state.detalle_instit = semestre if institucion == "1. Facultad de Ciencias de la Conducta (Psicología)" else detalle_prepa
             st.session_state.grupo_asignado = "Licenciatura" if "Facultad" in institucion else "Preparatoria"
             if archivo_padres: st.session_state.archivo_b64 = base64.b64encode(archivo_padres.getvalue()).decode()
-            st.session_state.paso = "instrucciones"; st.rerun()
+            st.session_state.paso = "instrucciones"
+            st.rerun()
         else:
             st.error("⚠️ Por favor completa todos los campos obligatorios.")
 
 # --- PANTALLA 1: BIENVENIDA ---
-        elif st.session_state.paso == "instrucciones":
-            st.subheader("¡Bienvenido(a)!")
-            st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
+elif st.session_state.paso == "instrucciones":
+    st.subheader("¡Bienvenido(a)!")
+    st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
     
-            st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor gíralo a **posición horizontal** para que puedas escribir y ordenar las palabras con mayor facilidad.")
+    st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor gíralo a **posición horizontal** para que puedas escribir y ordenar las palabras con mayor facilidad.")
 
     st.write("""
     Gracias por participar. Las instrucciones son:
@@ -151,10 +152,9 @@ if st.session_state.paso == "consentimiento":
     2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
     3. Ordénalas por importancia (la #1 es la más importante para ti).
     """)
-        if st.button("Comenzar Estudio"):
+    if st.button("Comenzar Estudio"):
         st.session_state.paso = 1
         st.rerun()
-
 
 # --- PANTALLA GRUPO FOCAL ---
 elif st.session_state.paso == "grupo_focal":
@@ -166,13 +166,18 @@ elif st.session_state.paso == "grupo_focal":
         if st.button("Finalizar"):
             payload_f = {"tipo": "focal", "nombre": st.session_state.iniciales, "whatsapp": whatsapp, "correo_focal": correo_focal, "archivo_b64": st.session_state.archivo_b64, "iniciales": st.session_state.iniciales}
             requests.post(SCRIPT_URL, json=payload_f)
-            st.session_state.paso = "final"; st.rerun()
+            st.session_state.paso = "final"
+            st.rerun()
     elif participa == "No":
-        if st.button("Finalizar"): st.session_state.paso = "final"; st.rerun()
+        if st.button("Finalizar"): 
+            st.session_state.paso = "final"
+            st.rerun()
 
 # --- PANTALLA FINAL ---
 elif st.session_state.paso == "final":
-    st.balloons(); st.success("¡Muchas gracias! Has completado el estudio."); st.write("Damos gracias por contribuir a nuestra tesis.")
+    st.balloons()
+    st.success("¡Muchas gracias! Has completado el estudio.")
+    st.write("Damos gracias por contribuir a nuestra tesis.")
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
@@ -185,10 +190,13 @@ else:
         w = [st.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}") for i in range(10)]
         if st.button("Siguiente: Ordenar importancia"):
             if (all(w) and len(set(w)) == 10) or modo_prueba:
-                st.session_state.temp_words = w; st.session_state.paso = 2; st.rerun()
+                st.session_state.temp_words = w
+                st.session_state.paso = 2
+                st.rerun()
             elif len(set(w)) < 10 and all(w):
                 st.error("⚠️ Tienes palabras repetidas. Escribe 10 palabras diferentes.")
-            else: st.error("⚠️ Escribe las 10 palabras.")
+            else: 
+                st.error("⚠️ Escribe las 10 palabras.")
 
     elif st.session_state.paso == 2:
         st.write("Selecciona tus palabras en orden de importancia:")
@@ -201,6 +209,7 @@ else:
                 st.markdown("### 📌 Tu orden actual:")
                 lista = "".join([f"<span style='color:#4A90E2'>**{i+1}.**</span> {p}  \n" for i, p in enumerate(ranking)])
                 st.markdown(lista, unsafe_allow_html=True)
+        
         if st.button("Guardar y continuar"):
             if len(ranking) == 10 or modo_prueba:
                 r, o = (ranking, st.session_state.temp_words)
@@ -208,8 +217,10 @@ else:
                     payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
                     requests.post(SCRIPT_URL, json=payload)
                 if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
-                    st.session_state.indice_palabra += 1; st.session_state.paso = 1
-                else: st.session_state.paso = "grupo_focal"
+                    st.session_state.indice_palabra += 1
+                    st.session_state.paso = 1
+                else: 
+                    st.session_state.paso = "grupo_focal"
                 st.rerun()
-            else: st.warning("⚠️ Selecciona las 10 palabras.")
-
+            else: 
+                st.warning("⚠️ Selecciona las 10 palabras.")
