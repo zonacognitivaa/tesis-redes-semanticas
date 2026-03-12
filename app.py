@@ -31,7 +31,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-modo_prueba = False
+# --- MODO REVISIÓN DE DISEÑO ---
+with st.sidebar:
+    modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
+    if modo_prueba:
+        st.warning("⚠️ Modo prueba ON: Puedes avanzar sin llenar campos y NO se enviarán datos al Excel.")
 
 # --- 2. LÓGICA DE ESTADOS ---
 if 'indice_palabra' not in st.session_state:
@@ -68,8 +72,7 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** 
-    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -302,22 +305,6 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
