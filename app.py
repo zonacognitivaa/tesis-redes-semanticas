@@ -238,7 +238,7 @@ elif st.session_state.paso == "grupo_focal":
 # --- PANTALLA FINAL ---
 elif st.session_state.paso == "final" or st.session_state.finalizado:
     st.balloons()
-    st.success("¡Muchas gracias! Has completado el estudio.")
+    st.success(f"¡Muchas gracias {st.session_state.iniciales}! Has completado el estudio.")
     st.write("**Agradecemos profundamente que estás contribuyendo a nuestro proyecto de tesis.**")
     st.info("""
     **Contacto para dudas o aclaraciones:**
@@ -297,6 +297,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
