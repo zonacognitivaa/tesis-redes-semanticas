@@ -75,7 +75,7 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Si te es imposible, pon la pagina en modo sitio para computadora; click en ⋮ y luego 🖥️.**")
+    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad.**")
 
     st.info("""
     
@@ -85,7 +85,8 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** 
+    * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -183,16 +184,12 @@ elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
     st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
     
-    st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor utiliza el modo *sitio para computadora*")
-
-    st.write("""
+        st.write("""
     Gracias por participar. Las instrucciones son:
     1. Lee la frase que aparecerá en pantalla.
     2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
     3. Ordénalas por importancia (la #1 es la más importante para ti).
-    4. Si estas en celular, activa modo "sitio para computadora": 
-    En esta pantalla, localiza los ⋮ del navegador (no de la pagina), te aparecera un menú activa el modo 🖥️ *Sitio para computadora* espera a que se ajuste el diseño y continua con la prueba 
-    """)
+        """)
     if st.button("Comenzar Estudio"):
         st.session_state.paso = 1
         st.rerun()
@@ -327,3 +324,4 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
