@@ -44,11 +44,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- MODO REVISIÓN DE DISEÑO ---
-with st.sidebar:
-    modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
-    if modo_prueba:
-        st.warning("⚠️ Modo prueba ON: Puedes avanzar sin llenar campos y NO se enviarán datos al Excel.")
+# --- MODO REVISIÓN DE DISEÑO (OCULTO) ---
+modo_prueba = False # Por defecto siempre está apagado
+
+# La "llave secreta" es que aparezca la palabra 'admin' en el link
+if "admin" in st.query_params:
+    with st.sidebar:
+        modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
+        if modo_prueba:
+            st.warning("⚠️ Modo prueba ON: Puedes avanzar sin llenar campos y NO se enviarán datos al Excel.")
 
 # --- 2. LÓGICA DE ESTADOS ---
 if 'indice_palabra' not in st.session_state:
@@ -321,4 +325,5 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
     st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
