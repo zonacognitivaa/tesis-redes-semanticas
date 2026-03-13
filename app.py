@@ -75,8 +75,6 @@ st.header("Construcción Social de Roles, Estereotipos de Género y Normalizaci�
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad.**")
-
     st.info("""
     
     **Título de la investigación:** Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes 
@@ -326,6 +324,7 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
