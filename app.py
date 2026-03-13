@@ -266,10 +266,30 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
-   # 👇 MAGIA HACKER PARA SUBIR LA PANTALLA 👇
-    js_scroll = "window.scrollTo(0,0); var m=document.querySelector('.main'); if(m) m.scrollTop=0; var a=document.querySelector('[data-testid=stAppViewContainer]'); if(a) a.scrollTop=0;"
-    st.markdown(f'<img src="error.gif" onerror="{js_scroll}" style="display:none;" id="s_{st.session_state.indice_palabra}_{st.session_state.paso}">', unsafe_allow_html=True)
-    # 👆 FIN DE LA MAGIA 👆
+   # 👇 MAGIA NUCLEAR PARA SUBIR LA PANTALLA 👇
+    import streamlit.components.v1 as components
+    components.html(
+        f"""
+        <script>
+            setTimeout(function() {{
+                var docs = window.parent.document;
+                var scrollables = [
+                    docs.querySelector('[data-testid="stAppViewContainer"]'),
+                    docs.querySelector('.main'),
+                    docs.querySelector('.stApp'),
+                    docs.documentElement,
+                    docs.body
+                ];
+                scrollables.forEach(function(el) {{
+                    if(el) el.scrollTop = 0;
+                }});
+                window.parent.scrollTo(0, 0);
+            }}, 200);
+        </script>
+        """,
+        height=0
+    )
+    # 👆 FIN DE LA MAGIA NUCLEAR 👆
 
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
@@ -328,6 +348,7 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
