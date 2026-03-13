@@ -71,6 +71,8 @@ if 'indice_palabra' not in st.session_state:
     st.session_state.detalle_instit = ""
     st.session_state.grupo_asignado = "" 
     st.session_state.archivo_b64 = ""
+if 'bloqueo_boton' not in st.session_state:
+        st.session_state.bloqueo_boton = False
 
 # --- 3. INTERFAZ ---
 st.header("Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes: Redes Semánticas")
@@ -325,6 +327,7 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
     st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
