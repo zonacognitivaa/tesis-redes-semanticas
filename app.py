@@ -184,7 +184,7 @@ elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
     st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
     
-        st.write("""
+    st.write("""
     Gracias por participar. Las instrucciones son:
     1. Lee la frase que aparecerá en pantalla.
     2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
@@ -324,6 +324,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
