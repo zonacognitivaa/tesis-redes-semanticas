@@ -266,12 +266,16 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
-    # 👇 MAGIA PARA SUBIR LA PANTALLA AUTOMÁTICAMENTE 👇
+   # 👇 MAGIA PARA SUBIR LA PANTALLA AUTOMÁTICAMENTE 👇
     st.markdown(f"""
         <script>
-            window.parent.scrollTo(0, 0);
-            var main = window.parent.document.querySelector('.main');
-            if (main) main.scrollTo(0, 0);
+            setTimeout(function() {{
+                window.parent.scrollTo(0, 0);
+                var main = window.parent.document.querySelector('section.main');
+                if (main) {{
+                    main.scrollTo(0, 0);
+                }}
+            }}, 150);
         </script>
         <span style='display:none'>Scroll {st.session_state.indice_palabra}_{st.session_state.paso}</span>
     """, unsafe_allow_html=True)
@@ -334,3 +338,4 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
