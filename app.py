@@ -28,6 +28,19 @@ st.markdown("""
     div[data-baseweb="popover"] ul[aria-multiselectable="true"] li:first-child {
         display: none !important;
     }
+    
+    /* Adaptación específica para Celulares */
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 1.5rem !important;
+        }
+        h3 {
+            font-size: 1.2rem !important;
+        }
+        .stButton>button {
+            width: 100% !important; /* Botones anchos en celular para tocarlos fácil */
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -62,7 +75,7 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad. Si te es imposible, pon la pagina en modo sitio para computadora; click en ⋮ y luego 🖥️.**")
+    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad.)
 
     st.info("""
     
@@ -72,8 +85,7 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** 
-    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -171,16 +183,15 @@ elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
     st.markdown(f"**Grupo:** {st.session_state.grupo_asignado}")
     
-    st.warning("📱 **RECOMENDACIÓN:** Si estás realizando este estudio desde un **celular**, por favor utiliza el modo *sitio para computadora*")
+    st.warning("📱 **RECOMENDACIÓN:**Para mayor comodidad abrelo en computadora**")
 
     st.write("""
     Gracias por participar. Las instrucciones son:
     1. Lee la frase que aparecerá en pantalla.
     2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
     3. Ordénalas por importancia (la #1 es la más importante para ti).
-    4. Si estas en celular, activa modo "sitio para computadora": 
-    En esta pantalla, localiza los ⋮ del navegador (no de la pagina), te aparecera un menú activa el modo 🖥️ *Sitio para computadora* espera a que se ajuste el diseño y continua con la prueba 
-    """)
+    
+    
     if st.button("Comenzar Estudio"):
         st.session_state.paso = 1
         st.rerun()
@@ -266,7 +277,16 @@ else:
     if st.session_state.paso == 1:
         st.write("### Escribe las primeras diez palabras que se te vengan a la mente después de leer la siguiente frase")
         st.markdown(f"<h2 style='text-align: center; color: #4A90E2;'>{frase_actual}</h2>", unsafe_allow_html=True)
-        w = [st.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}") for i in range(10)]
+        
+        # --- NUEVO: 2 columnas para computadora, 1 para celular ---
+        col_w1, col_w2 = st.columns(2)
+        w = [""] * 10
+        for i in range(10):
+            if i < 5:
+                w[i] = col_w1.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}")
+            else:
+                w[i] = col_w2.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}")
+                
         if st.button("Siguiente: Ordenar importancia"):
             if (all(w) and len(set(w)) == 10) or modo_prueba:
                 st.session_state.temp_words = w
@@ -298,14 +318,8 @@ else:
                 if not modo_prueba:
                     payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
                     requests.post(SCRIPT_URL, json=payload)
-                if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
-                    st.session_state.indice_palabra += 1
-                    st.session_state.paso = 1
-                else: 
-                    st.session_state.paso = "grupo_focal"
-                st.rerun()
-            else: 
-                st.warning("⚠️ Selecciona las 10 palabras.")
+                if st.session_state.indice_palabra + 1 < len
+
 
 
 
