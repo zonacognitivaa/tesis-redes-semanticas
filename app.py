@@ -266,26 +266,17 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
-   # 👇 MAGIA PARA SUBIR LA PANTALLA AUTOMÁTICAMENTE 👇
-    st.markdown(f"""
+   # 👇 MAGIA DEFINITIVA PARA SUBIR LA PANTALLA 👇
+    import streamlit.components.v1 as components
+    components.html(f"""
         <script>
-            setTimeout(function() {{
-                var contenedores = [
-                    window.parent.document.querySelector('[data-testid="stAppViewContainer"]'),
-                    window.parent.document.querySelector('.main'),
-                    window.parent.document.querySelector('section.main'),
-                    window.parent,
-                    window
-                ];
-                contenedores.forEach(function(c) {{
-                    if (c && typeof c.scrollTo === 'function') {{
-                        c.scrollTo({{top: 0, behavior: 'smooth'}});
-                    }}
-                }});
-            }}, 200);
+            var app = window.parent.document.querySelector('.main') || window.parent.document.querySelector('[data-testid="stAppViewContainer"]');
+            if (app) {{
+                app.scrollTo({{top: 0}});
+            }}
+            window.parent.scrollTo(0, 0);
         </script>
-        <span style='display:none'>Scroll_{st.session_state.indice_palabra}_{st.session_state.paso}</span>
-    """, unsafe_allow_html=True)
+        """, height=0, width=0)
     # 👆 FIN DE LA MAGIA 👆
 
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
@@ -345,5 +336,6 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
