@@ -325,7 +325,8 @@ else:
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
-           st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+        st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
