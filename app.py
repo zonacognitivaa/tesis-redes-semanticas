@@ -4,7 +4,7 @@ import requests
 import base64
 
 # --- 1. CONFIGURACIÓN ---
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyI2snGDoUQWUXSGuJSoE3Hd7zX6cqfSwXEwodxHhqEVZw8eQsxb-S07x-9Ia0kQOrK/exec"
+SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOGCHKyF8OeCXQXYf0JSa18BhPh84GjDXMQygQ25Iprq5qZw6mm7hR-PJzPHD1wHPj/exec"
 
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres son mejores para:", 
@@ -87,7 +87,8 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** 
+    * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
