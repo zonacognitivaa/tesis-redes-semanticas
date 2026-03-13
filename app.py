@@ -183,8 +183,7 @@ if st.session_state.paso == "consentimiento":
         else:
             st.error("⚠️ Por favor completa todos los campos obligatorios.")
             st.session_state.bloqueo_boton = False
-            st.rerun()
-
+            
 # --- PANTALLA 1: BIENVENIDA ---
 elif st.session_state.paso == "instrucciones":
     st.subheader("¡Bienvenido(a)!")
@@ -252,9 +251,9 @@ elif st.session_state.paso == "grupo_focal":
                 st.session_state.bloqueo_boton = False
                 st.rerun()
             else:
-                st.warning("Por favor completa al menos tu WhatsApp, correo, modalidad, días y horarios preferidos.")
+                st.warning("⚠️ Por favor completa al menos tu WhatsApp, correo, modalidad, días y horarios preferidos.")
                 st.session_state.bloqueo_boton = False
-                st.rerun()
+                
                 
     elif participa == "No, gracias":
         if st.button("Finalizar estudio"):
@@ -303,11 +302,11 @@ else:
             elif len(set(w)) < 10 and all(w):
                 st.error("⚠️ Tienes palabras repetidas. Escribe 10 palabras diferentes.")
                 st.session_state.bloqueo_boton = False
-                st.rerun()
+                
             else: 
                 st.error("⚠️ Escribe las 10 palabras.")
                 st.session_state.bloqueo_boton = False
-                st.rerun()
+                
 
     elif st.session_state.paso == 2:
         st.write("Selecciona tus palabras en orden de importancia de acuerdo con lo que tú opines:")
@@ -345,6 +344,6 @@ else:
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 st.session_state.bloqueo_boton = False
-                st.rerun()
+                
                 
     st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
