@@ -44,15 +44,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- MODO REVISIÓN DE DISEÑO (OCULTO) ---
-modo_prueba = False # Por defecto siempre está apagado
-
-# La "llave secreta" es que aparezca la palabra 'admin' en el link
-if "admin" in st.query_params:
-    with st.sidebar:
-        modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
-        if modo_prueba:
-            st.warning("⚠️ Modo prueba ON: Puedes avanzar sin llenar campos y NO se enviarán datos al Excel.")
+# --- MODO REVISIÓN DE DISEÑO ---
+with st.sidebar:
+    modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
+    if modo_prueba:
+        st.warning("⚠️ Modo prueba ON: Puedes avanzar sin llenar campos y NO se enviarán datos al Excel.")
 
 # --- 2. LÓGICA DE ESTADOS ---
 if 'indice_palabra' not in st.session_state:
@@ -71,8 +67,6 @@ if 'indice_palabra' not in st.session_state:
     st.session_state.detalle_instit = ""
     st.session_state.grupo_asignado = "" 
     st.session_state.archivo_b64 = ""
-if 'bloqueo_boton' not in st.session_state:
-        st.session_state.bloqueo_boton = False
 
 # --- 3. INTERFAZ ---
 st.header("Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes: Redes Semánticas")
@@ -88,8 +82,7 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** 
-    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -155,29 +148,11 @@ if st.session_state.paso == "consentimiento":
 
     acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
     
-   # Reemplaza el botón viejo por este nuevo con "disabled"
-    if st.button("Continuar", disabled=st.session_state.bloqueo_boton):
-        st.session_state.bloqueo_boton = True # Se bloquea en el microsegundo del clic
-        
+    if st.button("Continuar"):
         rel_otra_ok = (rel_crianza != "Otra" or rel_crianza_otra) and (rel_actual != "Otra" or rel_actual_otra)
         inst_ok = (institucion == "1. Facultad de Ciencias de la Conducta (Psicología)" and semestre != "- Selecciona tu semestre -" and semestre != "") or \
                   (institucion == "2. Preparatoria UAEMex" and detalle_prepa != "- Selecciona tu plantel -") or \
                   (institucion == "3. Preparatoria" and detalle_prepa != "")
-
-        if (acepto and iniciales and edad and sexo != "- Selecciona -" and estado_civil != "- Selecciona -" and 
-            rel_crianza != "- Selecciona -" and rel_actual != "- Selecciona -" and influencia_rel != "- Selecciona -" and 
-            rel_otra_ok and inst_ok) or modo_prueba:
-            
-            # ... (Tus líneas de guardado en session_state: st.session_state.iniciales = iniciales, etc.) ...
-            # Mantenlas todas igualitas aquí adentro.
-            
-            st.session_state.paso = "instrucciones"
-            st.session_state.bloqueo_boton = False # Se libera para la siguiente pantalla
-            st.rerun()
-        else:
-            st.error("⚠️ Por favor completa todos los campos obligatorios.")
-            st.session_state.bloqueo_boton = False # Se libera para que puedan corregir y re-intentar
-            st.rerun() # Forzamos recarga para que el botón se active de nuevo
 
         if (acepto and iniciales and edad and sexo != "- Selecciona -" and estado_civil != "- Selecciona -" and 
             rel_crianza != "- Selecciona -" and rel_actual != "- Selecciona -" and influencia_rel != "- Selecciona -" and 
@@ -314,51 +289,34 @@ else:
             else: 
                 st.error("⚠️ Escribe las 10 palabras.")
 
-# --- BLOQUE CORRECTO PARA EL BOTÓN EN EL PASO 2 ---
-        if st.button("Guardar y continuar", disabled=st.session_state.bloqueo_boton):
-            st.session_state.bloqueo_boton = True # 🔒 Bloqueamos para evitar duplicados
-            
-            # Aquí solo validamos que el ranking tenga 10 palabras
+    elif st.session_state.paso == 2:
+        st.write("Selecciona tus palabras en orden de importancia de acuerdo con lo que tú opines:")
+        st.markdown(f"<h3 style='text-align: center; color: #4A90E2;'>\"{frase_actual}\"</h3>", unsafe_allow_html=True)
+        st.info("💡 La #1 es la de mayor relación y la #10 la de menor relación.") 
+        
+        col_izq, col_der = st.columns(2)
+        
+        with col_izq:
+            ranking = st.multiselect("Haz clic para elegir:", st.session_state.temp_words, max_selections=10)
+        with col_der:
+            if ranking:
+                st.markdown("### 📌 Tu orden actual:")
+                lista = "".join([f"<span style='color:#4A90E2'>**{i+1}.**</span> {p}  \n" for i, p in enumerate(ranking)])
+                st.markdown(lista, unsafe_allow_html=True)
+        
+        if st.button("Guardar y continuar"):
             if len(ranking) == 10 or modo_prueba:
                 r, o = (ranking, st.session_state.temp_words)
-                
                 if not modo_prueba:
-                    # Preparamos los datos para enviar al Excel
-                    payload = {
-                        "tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, 
-                        "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, 
-                        "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, 
-                        "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, 
-                        "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, 
-                        "grupo": st.session_state.grupo_asignado, "frase": frase_actual, 
-                        "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], 
-                        "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], 
-                        "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], 
-                        "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]
-                    }
+                    payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
                     requests.post(SCRIPT_URL, json=payload)
-
-                # Decidimos si vamos a la siguiente palabra o al grupo focal
                 if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
                     st.session_state.indice_palabra += 1
                     st.session_state.paso = 1
                 else: 
                     st.session_state.paso = "grupo_focal"
-                
-                st.session_state.bloqueo_boton = False # 🔓 Liberamos para la siguiente pantalla
                 st.rerun()
             else: 
-                # Si no han elegido 10, avisamos y desbloqueamos el botón
-                st.warning("⚠️ Por favor selecciona las 10 palabras antes de continuar.")
-                st.session_state.bloqueo_boton = False 
-                st.rerun()
-
-    # ⛔ AQUÍ YA NO LLEVA NINGÚN "ELSE" ⛔
-    
-        st.markdown("<br><br><br><br>", unsafe_allow_html=True)
-
-
-
-
-
-
+                st.warning("⚠️ Selecciona las 10 palabras.")
+                
+    st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
