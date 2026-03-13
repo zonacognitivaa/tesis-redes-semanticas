@@ -75,7 +75,7 @@ st.title("Construcción Social de Roles, Estereotipos de Género y Normalizació
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
-    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad.)
+    st.warning("📱 **RECOMENDACIÓN: Realiza el llenado desde una computadora para mayor comodidad.**)
 
     st.info("""
     
@@ -319,6 +319,7 @@ else:
                     payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
                     requests.post(SCRIPT_URL, json=payload)
                 if st.session_state.indice_palabra + 1 < len
+
 
 
 
