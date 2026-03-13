@@ -270,14 +270,21 @@ else:
     st.markdown(f"""
         <script>
             setTimeout(function() {{
-                window.parent.scrollTo(0, 0);
-                var main = window.parent.document.querySelector('section.main');
-                if (main) {{
-                    main.scrollTo(0, 0);
-                }}
-            }}, 150);
+                var contenedores = [
+                    window.parent.document.querySelector('[data-testid="stAppViewContainer"]'),
+                    window.parent.document.querySelector('.main'),
+                    window.parent.document.querySelector('section.main'),
+                    window.parent,
+                    window
+                ];
+                contenedores.forEach(function(c) {{
+                    if (c && typeof c.scrollTo === 'function') {{
+                        c.scrollTo({{top: 0, behavior: 'smooth'}});
+                    }}
+                }});
+            }}, 200);
         </script>
-        <span style='display:none'>Scroll {st.session_state.indice_palabra}_{st.session_state.paso}</span>
+        <span style='display:none'>Scroll_{st.session_state.indice_palabra}_{st.session_state.paso}</span>
     """, unsafe_allow_html=True)
     # 👆 FIN DE LA MAGIA 👆
 
@@ -338,4 +345,5 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
