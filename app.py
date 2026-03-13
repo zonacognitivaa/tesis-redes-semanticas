@@ -38,7 +38,7 @@ st.markdown("""
             font-size: 1.2rem !important;
         }
         .stButton>button {
-            width: 100% !important; /* Botones anchos en celular para tocarlos fácil */
+            width: 100% !important;
         }
     }
 </style>
@@ -76,15 +76,13 @@ if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
     st.info("""
-    
     **Título de la investigación:** Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes 
     
     **Duración estimada y procedimiento:** La aplicación de las redes semánticas será desarrollada en un tiempo estimado de 1 hora, dando tiempo suficiente al sujeto para responder de la manera más sincera posible, teniendo en cuenta que los datos obtenidos serán confidenciales y serán empleados para investigación.
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** 
-    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -219,19 +217,18 @@ elif st.session_state.paso == "grupo_focal":
         if st.button("Enviar mis datos y finalizar"):
             if (whatsapp and correo_focal and modalidad and dias and horarios) or modo_prueba:
                 payload_focal = {
-                
-                "tipo": "focal", 
-                "nombre": st.session_state.iniciales, 
-                "whatsapp": whatsapp, 
-                "correo_focal": correo_focal,
-                "modalidad": ", ".join(modalidad),
-                "dias": ", ".join(dias),
-                "horarios": ", ".join(horarios),
-                "detalle_horarios": detalle_h,
-                "archivo_b64": st.session_state.archivo_b64, 
-                "iniciales": st.session_state.iniciales,
-                "grupo": st.session_state.grupo_asignado
-            }
+                    "tipo": "focal", 
+                    "nombre": st.session_state.iniciales, 
+                    "whatsapp": whatsapp, 
+                    "correo_focal": correo_focal,
+                    "modalidad": ", ".join(modalidad),
+                    "dias": ", ".join(dias),
+                    "horarios": ", ".join(horarios),
+                    "detalle_horarios": detalle_h,
+                    "archivo_b64": st.session_state.archivo_b64, 
+                    "iniciales": st.session_state.iniciales,
+                    "grupo": st.session_state.grupo_asignado
+                }
                 
                 if not modo_prueba:
                     try:
@@ -265,33 +262,8 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
     Si deseas posteriormente **conocer los resultados**, escribenos para compartirte la tesis una vez este finalizada.
     """)
 
-# --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
+# --- LÓGICA DE LAS FRASES ---
 else:
-   # 👇 MAGIA NUCLEAR PARA SUBIR LA PANTALLA 👇
-    import streamlit.components.v1 as components
-    components.html(
-        f"""
-        <script>
-            setTimeout(function() {{
-                var docs = window.parent.document;
-                var scrollables = [
-                    docs.querySelector('[data-testid="stAppViewContainer"]'),
-                    docs.querySelector('.main'),
-                    docs.querySelector('.stApp'),
-                    docs.documentElement,
-                    docs.body
-                ];
-                scrollables.forEach(function(el) {{
-                    if(el) el.scrollTop = 0;
-                }});
-                window.parent.scrollTo(0, 0);
-            }}, 200);
-        </script>
-        """,
-        height=0
-    )
-    # 👆 FIN DE LA MAGIA NUCLEAR 👆
-
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
     
@@ -299,7 +271,6 @@ else:
         st.write("### Escribe las primeras diez palabras que se te vengan a la mente después de leer la siguiente frase")
         st.markdown(f"<h2 style='text-align: center; color: #4A90E2;'>{frase_actual}</h2>", unsafe_allow_html=True)
         
-        # --- NUEVO: 2 columnas para computadora, 1 para celular ---
         col_w1, col_w2 = st.columns(2)
         w = [""] * 10
         for i in range(10):
@@ -348,10 +319,4 @@ else:
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
-        st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
-
-
-
-
-
-
+    st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
