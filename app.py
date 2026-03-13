@@ -4,7 +4,7 @@ import requests
 import base64
 
 # --- 1. CONFIGURACIÓN ---
-SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySrDjlqjk2cLw8fu_vxJkfPmeKx4-5Au8b732KrhxI2ziq1FhTnqlFADfs6PGZsW-2/exec"
+SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCgn0_fIMpHjjSJyoYeFg8cdLddzuGOov7diwg_cUyNEz5muAwFgFQRC6umV63alH2/exec"
 
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres son mejores para:", 
