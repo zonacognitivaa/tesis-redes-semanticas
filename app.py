@@ -69,7 +69,7 @@ if 'indice_palabra' not in st.session_state:
     st.session_state.archivo_b64 = ""
 
 # --- 3. INTERFAZ ---
-st.title("Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes: Redes Semánticas")
+st.header("Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes: Redes Semánticas")
 
 # --- PANTALLA 0: CONSENTIMIENTO INFORMADO ---
 if st.session_state.paso == "consentimiento":
@@ -326,6 +326,7 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
