@@ -325,3 +325,4 @@ else:
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
 
+
