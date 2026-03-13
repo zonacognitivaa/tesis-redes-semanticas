@@ -72,7 +72,8 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** 
+    * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -83,9 +84,9 @@ if st.session_state.paso == "consentimiento":
     **Aclaraciones:**
     1. Su decisión de participar en el estudio es voluntaria.
     2. En caso de decidir no participar en esta investigación, no habrá ninguna consecuencia desfavorable para usted, su familia o su institución.
-    3. Si decide participar en la investigación usted puede retirarse en el momento que así lo disponga.
+    3. Si decide participar en la investigación puede retirarse en el momento que así lo disponga.
     4. La información obtenida en este estudio mantendrá estricta confidencialidad acerca de los participantes.
-    5. Los resultados de la investigación podrán difundirse en tesis, artículos científicos o presentaciones académicas, garantizando siempre el anonimato de los participantes.
+    5. Los resultados de la investigación podrán difundirse en tesis, artículos científicos o presentaciones académicas, garantizando siempre el anonimato de los y las participantes.
     """)
     
     st.write("---")
@@ -99,7 +100,7 @@ if st.session_state.paso == "consentimiento":
         iniciales = st.text_input("Mis iniciales (Ej: A.M.A.G)").upper()
         edad = st.number_input("Edad", min_value=15, max_value=40, step=1, value=18)
         sexo = st.selectbox("Sexo", ["- Selecciona -", "Mujer", "Hombre", "Prefiero no decirlo"])
-        estado_civil = st.selectbox("Estado Civil", ["- Selecciona -", "Soltero/a", "Casado/a", "Vivo con mi pareja en unión libre", "Viudo/a"])
+        estado_civil = st.selectbox("Estado Civil", ["- Selecciona -", "Soltero/a", "Casado/a", "Vivo con mi pareja en unión libre", "Divorciado/a", "Viudo/a"])
         
         st.write("**Creencias Religiosas:**")
         rel_crianza = st.selectbox("Religión en la que me criaron", opciones_relig)
@@ -305,6 +306,7 @@ else:
                 st.rerun()
             else: 
                 st.warning("⚠️ Selecciona las 10 palabras.")
+
 
 
 
