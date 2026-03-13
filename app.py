@@ -330,7 +330,7 @@ else:
                 st.markdown(lista, unsafe_allow_html=True)
         
         if st.button("Continuar", disabled=st.session_state.bloqueo_boton):
-        st.session_state.bloqueo_boton = True  # 🔒 Bloqueamos
+            st.session_state.bloqueo_boton = True  # 🔒 Bloqueamos
         
         # ... (tus validaciones de rel_otra_ok, inst_ok, etc) ...
 
@@ -348,6 +348,7 @@ else:
     # ⛔ AQUÍ YA NO LLEVA NINGÚN "ELSE" ⛔
     
         st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
