@@ -267,6 +267,7 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
+    # 👇 MAGIA PARA SUBIR LA PANTALLA AUTOMÁTICAMENTE 👇
     st.markdown(f"""
         <script>
             window.parent.scrollTo(0, 0);
@@ -279,6 +280,10 @@ else:
 
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
+    
+    if st.session_state.paso == 1:
+        # ... (Aquí sigue todo normal) ...
+    
     
     if st.session_state.paso == 1:
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
@@ -338,6 +343,7 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
