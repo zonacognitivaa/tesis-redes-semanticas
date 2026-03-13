@@ -333,7 +333,7 @@ else:
                         payload["archivo_b64"] = st.session_state.archivo_b64
                 else:
                    payload["archivo_b64"] = ""
-                   requests.post(SCRIPT_URL, json=payload)
+                requests.post(SCRIPT_URL, json=payload)
                 if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
                     st.session_state.indice_palabra += 1
                     st.session_state.paso = 1
