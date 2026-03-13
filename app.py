@@ -267,6 +267,20 @@ elif st.session_state.paso == "final" or st.session_state.finalizado:
 
 # --- LÓGICA DE LAS FRASES (EL ELSE VA AL FINAL) ---
 else:
+    st.markdown(f"""
+        <script>
+            window.parent.scrollTo(0, 0);
+            var main = window.parent.document.querySelector('.main');
+            if (main) main.scrollTo(0, 0);
+        </script>
+        <span style='display:none'>Scroll {st.session_state.indice_palabra}_{st.session_state.paso}</span>
+    """, unsafe_allow_html=True)
+    # 👆 FIN DE LA MAGIA 👆
+
+    frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
+    st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
+    
+    if st.session_state.paso == 1:
     frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
     
@@ -324,6 +338,7 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
 
 
 
