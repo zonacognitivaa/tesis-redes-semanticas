@@ -83,8 +83,7 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** 
-    * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -187,7 +186,7 @@ elif st.session_state.paso == "instrucciones":
     1. Lee la frase que aparecerá en pantalla.
     2. Escribe las primeras 10 palabras que se te ocurran (de ser muy necesario puedes usar frases cortas).
     3. Ordénalas por importancia (la #1 es la más importante para ti).
-        """)
+    """)
     if st.button("Comenzar Estudio"):
         st.session_state.paso = 1
         st.rerun()
@@ -282,14 +281,6 @@ else:
     st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
     
     if st.session_state.paso == 1:
-        # ... (Aquí sigue todo normal) ...
-    
-    
-    if st.session_state.paso == 1:
-    frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
-    st.progress((st.session_state.indice_palabra) / len(PALABRAS_ESTIMULO))
-    
-    if st.session_state.paso == 1:
         st.write("### Escribe las primeras diez palabras que se te vengan a la mente después de leer la siguiente frase")
         st.markdown(f"<h2 style='text-align: center; color: #4A90E2;'>{frase_actual}</h2>", unsafe_allow_html=True)
         
@@ -343,13 +334,3 @@ else:
                 st.warning("⚠️ Selecciona las 10 palabras.")
                 
         st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
-
