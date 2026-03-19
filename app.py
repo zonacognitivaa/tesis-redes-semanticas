@@ -336,4 +336,42 @@ elif st.session_state.paso == "grupo_focal":
                     "horarios": ", ".join(horarios),
                     "detalle_horarios": detalle_h,
                     "archivo_b64": st.session_state.archivo_b64, 
-                    "iniciales": st.session
+                    "iniciales": st.session_state.iniciales,
+                    "grupo": st.session_state.grupo_asignado
+                }
+                
+                if not modo_prueba:
+                    try:
+                        requests.post(SCRIPT_URL, json=payload_focal)
+                    except:
+                        pass 
+                
+                st.session_state.paso = "final"
+                st.session_state.finalizado = True
+                st.session_state.bloqueo_boton = False
+                st.rerun()
+            else:
+                st.warning("⚠️ Por favor completa al menos tu WhatsApp, correo, modalidad, días y horarios preferidos.")
+                st.session_state.bloqueo_boton = False
+                
+    elif participa == "No, gracias":
+        if st.button("Finalizar estudio"):
+            st.session_state.paso = "final"
+            st.session_state.finalizado = True
+            st.rerun()
+
+# --- PANTALLA FINAL ---
+elif st.session_state.paso == "final" or st.session_state.finalizado:
+    st.balloons()
+    st.success(f"¡Muchas gracias {st.session_state.iniciales}! Has completado el estudio.")
+    st.write("**Agradecemos profundamente que estás contribuyendo a nuestro proyecto de tesis.**")
+    st.info("""
+    **Contacto para dudas o aclaraciones:**
+    Para cualquier duda, aclaración o mayor información del estudio, puedes contactar con las investigadoras a los siguientes correos:
+    * **Karen Guadalupe Aguirre Rojas:** kaguirrer848@alumno.uaemex.mx
+    * **Ana Karen Gómez Arriaga:** agomeza586@alumno.uaemex.mx
+    
+    Si deseas posteriormente **conocer los resultados**, escribenos para compartirte la tesis una vez este finalizada.
+    """)
+
+st.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
