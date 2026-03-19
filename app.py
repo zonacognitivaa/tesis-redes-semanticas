@@ -53,6 +53,51 @@ if "admin" in st.query_params:
         modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
         if modo_prueba:
             st.warning("⚠️ Modo prueba ON: Puedes avanzar sin llenar campos y NO se enviarán datos al Excel.")
+            
+            # 👇 NUEVO: FLECHAS DE NAVEGACIÓN 👇
+            st.markdown("---")
+            st.markdown("### 🧭 Navegación Rápida")
+            
+            col_izq, col_der = st.columns(2)
+            
+            if col_izq.button("⬅️ Atrás"):
+                if st.session_state.paso == "instrucciones":
+                    st.session_state.paso = "consentimiento"
+                elif st.session_state.paso == 1 and st.session_state.indice_palabra == 0:
+                    st.session_state.paso = "instrucciones"
+                elif st.session_state.paso == 2:
+                    st.session_state.paso = 1
+                elif st.session_state.paso == 1 and st.session_state.indice_palabra > 0:
+                    st.session_state.indice_palabra -= 1
+                    st.session_state.paso = 2
+                elif st.session_state.paso == "grupo_focal":
+                    st.session_state.indice_palabra = len(PALABRAS_ESTIMULO) - 1
+                    st.session_state.paso = 2
+                elif st.session_state.paso == "final" or st.session_state.finalizado:
+                    st.session_state.paso = "grupo_focal"
+                    st.session_state.finalizado = False
+                st.rerun()
+
+            if col_der.button("Avanzar ➡️"):
+                if st.session_state.paso == "consentimiento":
+                    st.session_state.paso = "instrucciones"
+                elif st.session_state.paso == "instrucciones":
+                    st.session_state.paso = 1
+                elif st.session_state.paso == 1:
+                    # Rellenamos palabras fantasma para que la siguiente pantalla no marque error
+                    st.session_state.temp_words = [f"Palabra_{i}" for i in range(1, 11)]
+                    st.session_state.paso = 2
+                elif st.session_state.paso == 2:
+                    if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
+                        st.session_state.indice_palabra += 1
+                        st.session_state.paso = 1
+                    else:
+                        st.session_state.paso = "grupo_focal"
+                elif st.session_state.paso == "grupo_focal":
+                    st.session_state.paso = "final"
+                    st.session_state.finalizado = True
+                st.rerun()
+            # 👆 FIN DE FLECHAS DE NAVEGACIÓN 👆
 
 # --- 2. LÓGICA DE ESTADOS ---
 if 'indice_palabra' not in st.session_state:
