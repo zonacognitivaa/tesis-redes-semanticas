@@ -31,23 +31,16 @@ st.markdown("""
     
     /* Adaptación específica para Celulares */
     @media (max-width: 768px) {
-        h2 {
-            font-size: 1.5rem !important;
-        }
-        h3 {
-            font-size: 1.2rem !important;
-        }
-        .stButton>button {
-            width: 100% !important;
-        }
+        h2 { font-size: 1.5rem !important; }
+        h3 { font-size: 1.2rem !important; }
+        .stButton>button { width: 100% !important; }
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- MODO REVISIÓN DE DISEÑO (OCULTO) ---
-modo_prueba = False # Por defecto siempre está apagado
+modo_prueba = False 
 
-# La "llave secreta" es que aparezca la palabra 'admin' en el link
 if "admin" in st.query_params:
     with st.sidebar:
         modo_prueba = st.checkbox("🛠️ Modo Prueba (Revisar diseño)", value=False)
@@ -84,7 +77,6 @@ if "admin" in st.query_params:
                 elif st.session_state.paso == "instrucciones":
                     st.session_state.paso = 1
                 elif st.session_state.paso == 1:
-                    # Rellenamos palabras fantasma para que la siguiente pantalla no marque error
                     st.session_state.temp_words = [f"Palabra_{i}" for i in range(1, 11)]
                     st.session_state.paso = 2
                 elif st.session_state.paso == 2:
@@ -115,7 +107,7 @@ if 'indice_palabra' not in st.session_state:
     st.session_state.detalle_instit = ""
     st.session_state.grupo_asignado = "" 
     st.session_state.archivo_b64 = ""
-    st.session_state.bloqueo_boton = False # Inicia desbloqueado
+    st.session_state.bloqueo_boton = False 
 
 # --- 3. INTERFAZ ---
 st.header("Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes: Redes Semánticas")
@@ -192,7 +184,6 @@ if st.session_state.paso == "consentimiento":
             st.warning("⚠️ Al ser estudiante de preparatoria, es obligatorio el consentimiento de tus padres.")
             url_drive = "https://drive.google.com/file/d/1gg09wf1bHp2hbMZza4J_GqfEmIqvJ0fK/view?usp=sharing" 
             st.link_button("📥 Descargar Consentimiento para Padres", url_drive)
-            
             archivo_padres = st.file_uploader("Sube el documento firmado (Foto o PDF)", type=["pdf", "jpg", "jpeg", "png"])
 
     acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
@@ -242,6 +233,79 @@ elif st.session_state.paso == "instrucciones":
         st.session_state.paso = 1
         st.rerun()
 
+# --- PANTALLA 2: ESCRIBIR PALABRAS ---
+elif st.session_state.paso == 1:
+    frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
+    st.progress(st.session_state.indice_palabra / len(PALABRAS_ESTIMULO))
+    
+    st.write("### Escribe las primeras diez palabras que se te vengan a la mente después de leer la siguiente frase")
+    st.markdown(f"<h2 style='text-align: center; color: #4A90E2;'>{frase_actual}</h2>", unsafe_allow_html=True)
+    
+    col_w1, col_w2 = st.columns(2)
+    w = [""] * 10
+    for i in range(10):
+        if i < 5:
+            w[i] = col_w1.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}")
+        else:
+            w[i] = col_w2.text_input(f"{i+1}° palabra", key=f"w{i}_{st.session_state.indice_palabra}")
+            
+    if st.button("Siguiente: Ordenar importancia", disabled=st.session_state.bloqueo_boton):
+        st.session_state.bloqueo_boton = True
+        if (all(w) and len(set(w)) == 10) or modo_prueba:
+            st.session_state.temp_words = w
+            st.session_state.paso = 2
+            st.session_state.bloqueo_boton = False
+            st.rerun()
+        elif len(set(w)) < 10 and all(w):
+            st.error("⚠️ Tienes palabras repetidas. Escribe 10 palabras diferentes.")
+            st.session_state.bloqueo_boton = False
+        else: 
+            st.error("⚠️ Escribe las 10 palabras.")
+            st.session_state.bloqueo_boton = False
+
+# --- PANTALLA 3: ORDENAR IMPORTANCIA ---
+elif st.session_state.paso == 2:
+    frase_actual = PALABRAS_ESTIMULO[st.session_state.indice_palabra]
+    st.progress(st.session_state.indice_palabra / len(PALABRAS_ESTIMULO))
+    
+    st.write("Selecciona tus palabras en orden de importancia de acuerdo con lo que tú opines:")
+    st.markdown(f"<h3 style='text-align: center; color: #4A90E2;'>\"{frase_actual}\"</h3>", unsafe_allow_html=True)
+    st.info("💡 La #1 es la de mayor relación y la #10 la de menor relación.") 
+    
+    col_izq, col_der = st.columns(2)
+    with col_izq:
+        ranking = st.multiselect("Haz clic para elegir:", st.session_state.temp_words, max_selections=10)
+    with col_der:
+        if ranking:
+            st.markdown("### 📌 Tu orden actual:")
+            lista = "".join([f"<span style='color:#4A90E2'>**{i+1}.**</span> {p}  \n" for i, p in enumerate(ranking)])
+            st.markdown(lista, unsafe_allow_html=True)
+    
+    if st.button("Guardar y continuar", disabled=st.session_state.bloqueo_boton):
+        st.session_state.bloqueo_boton = True
+        if len(ranking) == 10 or modo_prueba:
+            r, o = (ranking, st.session_state.temp_words)
+            
+            if not modo_prueba:
+                payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
+                if st.session_state.indice_palabra == 0 and st.session_state.archivo_b64 != "":
+                    payload["archivo_b64"] = st.session_state.archivo_b64
+                else:
+                    payload["archivo_b64"] = ""
+                    
+                requests.post(SCRIPT_URL, json=payload)
+                
+            if st.session_state.indice_palabra + 1 < len(PALABRAS_ESTIMULO):
+                st.session_state.indice_palabra += 1
+                st.session_state.paso = 1
+            else: 
+                st.session_state.paso = "grupo_focal"
+            st.session_state.bloqueo_boton = False
+            st.rerun()
+        else: 
+            st.warning("⚠️ Selecciona las 10 palabras.")
+            st.session_state.bloqueo_boton = False
+
 # --- PANTALLA X: GRUPO FOCAL ---
 elif st.session_state.paso == "grupo_focal":
     st.subheader("🗣️ Invitación a Grupo Focal")
@@ -254,5 +318,22 @@ elif st.session_state.paso == "grupo_focal":
         st.info("¡Excelente! Por favor déjanos tus datos para contactarte:")
         whatsapp = st.text_input("Número de WhatsApp")
         correo_focal = st.text_input("Correo que revises constantemente")
-        
         modalidad = st.multiselect("¿En qué modalidad prefieres participar?", ["En línea (Teams)", "Presencial"])
+        dias = st.multiselect("¿Qué días de la semana te acomodan mejor considerando el grupo focal?", ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"])
+        horarios = st.multiselect("¿En qué horario preferirías?", ["Mañana (9:00 - 12:00)", "Tarde (12:00 - 16:00)", "Noche (16:00 - 20:00)"])
+        detalle_h = st.text_area("Detalla tus horarios con tus propias palabras (Opcional):", placeholder="Ej: Solo puedo los martes después de las 5pm porque salgo de trabajar.")
+        
+        if st.button("Enviar mis datos y finalizar", disabled=st.session_state.bloqueo_boton):
+            st.session_state.bloqueo_boton = True
+            if (whatsapp and correo_focal and modalidad and dias and horarios) or modo_prueba:
+                payload_focal = {
+                    "tipo": "focal", 
+                    "nombre": st.session_state.iniciales, 
+                    "whatsapp": whatsapp, 
+                    "correo_focal": correo_focal,
+                    "modalidad": ", ".join(modalidad),
+                    "dias": ", ".join(dias),
+                    "horarios": ", ".join(horarios),
+                    "detalle_horarios": detalle_h,
+                    "archivo_b64": st.session_state.archivo_b64, 
+                    "iniciales": st.session
