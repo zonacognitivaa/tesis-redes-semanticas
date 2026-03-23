@@ -191,7 +191,7 @@ if st.session_state.paso == "consentimiento":
             st.link_button("📥 Descargar Consentimiento para Padres", url_drive)
             archivo_padres = st.file_uploader("Sube el documento firmado (Foto o PDF)", type=["pdf", "jpg", "jpeg", "png"])
 
-    st.markdown("***Estamos recabando información personal del/la estudiante, en apego al [Aviso de privacidad UAEMéx](https://www.uaemex.mx/avisos/Aviso_Privacidad.pdf***).")
+    st.markdown("**Estamos recabando información personal del/la estudiante, en apego al [Aviso de privacidad UAEMéx](https://www.uaemex.mx/avisos/Aviso_Privacidad.pdf**).")
     acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
     
     if st.button("Continuar"):
