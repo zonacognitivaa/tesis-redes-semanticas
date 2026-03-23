@@ -124,7 +124,8 @@ if st.session_state.paso == "consentimiento":
     
     **Instituto a realizar la investigación:** Facultad de Ciencias de la Conducta UAEMEX.
     
-    **Investigadoras:** * Karen Guadalupe Aguirre Rojas (Investigadora)
+    **Investigadoras:** 
+    * Karen Guadalupe Aguirre Rojas (Investigadora)
     * Ana Karen Gómez Arriaga (Investigadora)
     * Jaqueline Mota Palma (Asesora de tesis)
 
@@ -196,7 +197,7 @@ if st.session_state.paso == "consentimiento":
 
     # 1. TEXTO DEL AVISO DE PRIVACIDAD CON LINK
     st.markdown("Estamos recabando información personal del/la estudiante, en apego al [Aviso de privacidad UAEMéx](https://www.uaemex.mx/avisos/Aviso_Privacidad.pdf).")
-    acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
+    acepto = st.checkbox("***Confirmo los datos y acepto participar voluntariamente.***")
     
     if st.button("Continuar", disabled=st.session_state.bloqueo_boton):
         st.session_state.bloqueo_boton = True
