@@ -6,10 +6,10 @@ import base64
 # --- 1. CONFIGURACIÓN ---
 SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCgn0_fIMpHjjSJyoYeFg8cdLddzuGOov7diwg_cUyNEz5muAwFgFQRC6umV63alH2/exec"
 
+# 2. SE QUITARON LAS DOS FRASES DE RELIGIÓN
 PALABRAS_ESTIMULO = [
     "Las mujeres son:", "Los hombres son:", "las mujeres son mejores para:", 
-    "Los hombres son mejores para:", "La mujer para la religión es:", 
-    "El hombre para la religión es:", "La violencia es:", 
+    "Los hombres son mejores para:", "La violencia es:", 
     "La violencia se manifiesta en:"
 ]
 
@@ -98,6 +98,7 @@ if 'indice_palabra' not in st.session_state:
     st.session_state.iniciales = ""
     st.session_state.edad = ""
     st.session_state.sexo = ""
+    st.session_state.genero = "" # NUEVO: ESPACIO PARA EL GÉNERO
     st.session_state.estado_civil = ""
     st.session_state.rel_crianza = ""
     st.session_state.rel_actual = ""
@@ -149,7 +150,14 @@ if st.session_state.paso == "consentimiento":
     with col1:
         iniciales = st.text_input("Mis iniciales (Ej: A.M.A.G)").upper()
         edad = st.number_input("Edad", min_value=15, max_value=40, step=1, value=18)
-        sexo = st.selectbox("Sexo", ["- Selecciona -", "Mujer", "Hombre", "Prefiero no decirlo"])
+        
+        # 3. OPCIONES DE SEXO MODIFICADAS + CUADRO DE "OTRO"
+        sexo = st.selectbox("Sexo", ["- Selecciona -", "Mujer", "Hombre", "Intersexual", "Otro", "Prefiero no decirlo"])
+        sexo_otro = st.text_input("Especifica tu sexo:", key="s_otro") if sexo == "Otro" else ""
+        
+        # 4. PREGUNTA DE GÉNERO DEBAJO DE SEXO
+        genero = st.selectbox("Género", ["- Selecciona -", "Femenino", "Masculino", "No binario", "Prefiero no decirlo"])
+        
         estado_civil = st.selectbox("Estado Civil", ["- Selecciona -", "Soltero/a", "Casado/a", "Vivo con mi pareja en unión libre", "Divorciado/a", "Viudo/a"])
         
         st.write("**Creencias Religiosas:**")
@@ -186,6 +194,8 @@ if st.session_state.paso == "consentimiento":
             st.link_button("📥 Descargar Consentimiento para Padres", url_drive)
             archivo_padres = st.file_uploader("Sube el documento firmado (Foto o PDF)", type=["pdf", "jpg", "jpeg", "png"])
 
+    # 1. TEXTO DEL AVISO DE PRIVACIDAD CON LINK
+    st.markdown("Estamos recabando información personal del/la estudiante, en apego al [Aviso de privacidad UAEMéx](https://www.uaemex.mx/avisos/Aviso_Privacidad.pdf).")
     acepto = st.checkbox("Confirmo los datos y acepto participar voluntariamente.")
     
     if st.button("Continuar", disabled=st.session_state.bloqueo_boton):
@@ -194,14 +204,18 @@ if st.session_state.paso == "consentimiento":
         inst_ok = (institucion == "1. Facultad de Ciencias de la Conducta (Psicología)" and semestre != "- Selecciona tu semestre -" and semestre != "") or \
                   (institucion == "2. Preparatoria UAEMex" and detalle_prepa != "- Selecciona tu plantel -") or \
                   (institucion == "3. Preparatoria" and detalle_prepa != "")
+        # Validaciones nuevas para sexo y género
+        sexo_ok = sexo != "- Selecciona -" and (sexo != "Otro" or sexo_otro != "")
+        genero_ok = genero != "- Selecciona -"
 
-        if (acepto and iniciales and edad and sexo != "- Selecciona -" and estado_civil != "- Selecciona -" and 
+        if (acepto and iniciales and edad and sexo_ok and genero_ok and estado_civil != "- Selecciona -" and 
             rel_crianza != "- Selecciona -" and rel_actual != "- Selecciona -" and influencia_rel != "- Selecciona -" and 
             rel_otra_ok and inst_ok) or modo_prueba:
             
             st.session_state.iniciales = iniciales
             st.session_state.edad = edad
-            st.session_state.sexo = sexo
+            st.session_state.sexo = sexo_otro if sexo == "Otro" else sexo
+            st.session_state.genero = genero
             st.session_state.estado_civil = estado_civil
             st.session_state.rel_crianza = rel_crianza_otra if rel_crianza == "Otra" else rel_crianza
             st.session_state.rel_actual = rel_actual_otra if rel_actual == "Otra" else rel_actual
@@ -287,7 +301,8 @@ elif st.session_state.paso == 2:
             r, o = (ranking, st.session_state.temp_words)
             
             if not modo_prueba:
-                payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
+                # 5. AQUÍ SE AGREGA 'genero' AL PAQUETE DE DATOS PARA QUE VIAJE AL EXCEL
+                payload = {"tipo": "redes", "iniciales": st.session_state.iniciales, "edad": st.session_state.edad, "sexo": st.session_state.sexo, "genero": st.session_state.genero, "estado_civil": st.session_state.estado_civil, "rel_crianza": st.session_state.rel_crianza, "rel_actual": st.session_state.rel_actual, "influencia": st.session_state.influencia_rel, "correo": st.session_state.correo, "institucion": st.session_state.institucion, "detalle": st.session_state.detalle_instit, "grupo": st.session_state.grupo_asignado, "frase": frase_actual, "r1": r[0], "r2": r[1], "r3": r[2], "r4": r[3], "r5": r[4], "r6": r[5], "r7": r[6], "r8": r[7], "r9": r[8], "r10": r[9], "o1": o[0], "o2": o[1], "o3": o[2], "o4": o[3], "o5": o[4], "o6": o[5], "o7": o[6], "o8": o[7], "o9": o[8], "o10": o[9]}
                 if st.session_state.indice_palabra == 0 and st.session_state.archivo_b64 != "":
                     payload["archivo_b64"] = st.session_state.archivo_b64
                 else:
