@@ -110,14 +110,14 @@ if 'indice_palabra' not in st.session_state:
     st.session_state.archivo_b64 = ""
 
 # --- 3. INTERFAZ ---
-st.header("Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes: Redes Semánticas")
+st.header("CONSTRUCCIÓN Y NORMALIZACIÓN DE ROLES, ESTEREOTIPOS Y VIOLENCIA DE GÉNERO EN JÓVENES UNIVERSITARIOS")
 
 # --- PANTALLA 0: CONSENTIMIENTO INFORMADO ---
 if st.session_state.paso == "consentimiento":
     st.subheader("📄 Consentimiento Informado")
     
     st.info("""
-    **Título de la investigación:** Construcción Social de Roles, Estereotipos de Género y Normalización de la Violencia en Jóvenes Estudiantes 
+    **Título de la investigación:** CONSTRUCCIÓN Y NORMALIZACIÓN DE ROLES, ESTEREOTIPOS Y VIOLENCIA DE GÉNERO EN JÓVENES UNIVERSITARIOS 
     
     **Duración estimada y procedimiento:** La aplicación de las redes semánticas será desarrollada en un tiempo estimado de 1 hora, dando tiempo suficiente al sujeto para responder de la manera más sincera posible, teniendo en cuenta que los datos obtenidos serán confidenciales y serán empleados para investigación.
     
